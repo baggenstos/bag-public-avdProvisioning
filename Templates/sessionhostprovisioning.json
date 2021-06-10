@@ -44,7 +44,7 @@
           "timestamp": "[parameters('timestamp')]"
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File Provision-SessionHost.ps1 -registrationToken ', parameters('languagePackUrl'))]"
+          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File Provision-SessionHost.ps1 -languageDownloadUrl ', parameters('languagePackUrl'))]"
         }
       }
     }
