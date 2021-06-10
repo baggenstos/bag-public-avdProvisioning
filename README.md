@@ -1,2 +1,2 @@
 # bag-public-avdProvisioning
-Public repository for Azure Virtual Desktop (AVD) session host provisioning
+Public repository containing scripts, tools and templates for Azure Virtual Desktop (AVD) session host provisioning.
