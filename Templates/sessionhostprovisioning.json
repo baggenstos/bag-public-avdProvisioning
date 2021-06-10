@@ -1,0 +1,58 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "VM name to install the RDAgent on."
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "metadata": {
+        "description": "Timestamp of the custom script."
+      },
+      "defaultValue": "[utcNow()]"
+    },
+    "languagePackUrl": {
+	    "type": "string",
+	    "metadata": {
+		    "description": "Download URL for the archive file containing all language files."
+	    }
+    }
+  },
+  "variables": {
+    "cseName": "[concat(parameters('vmName'),'/','customscript')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[variables('cseName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.9",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/baggenstos/bag-public-avdProvisioning/master/Provision-SessionHost.ps1",
+            "[parameters('languagePackUrl')]"
+          ],
+          "timestamp": "[parameters('timestamp')]"
+        },
+        "protectedSettings": {
+          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File Provision-SessionHost.ps1 -registrationToken ', parameters('languagePackUrl'))]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "instanceView": {
+      "value": "[reference( resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('vmName'),'customscript')).instanceView]",
+      "type": "object"
+    }
+  }
+}
