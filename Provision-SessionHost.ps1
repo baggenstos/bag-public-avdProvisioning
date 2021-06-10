@@ -81,19 +81,20 @@ function Install-LanguageFeatures {
 	)
 
 	Write-Output "Downloading language specific files using the URL: $($downloadUrl)"
-	Write-Output "Extracting .zip file"
 
 	# Split URL to get file name
 	$fileName = $downloadUrl.Split('/')[4]
 	$filePath = ".\" + $fileName
 
 	# Extract .zip archive
+	Write-Output "Extracting .zip file"
 	Expand-Archive -Path $filePath
 
-	$languageFiles = Get-ChildItem -Path $filePath
+	$languageFiles = Get-ChildItem -Path $filePath.Split('.z')[0]
 
 	foreach ($languageFile in $languageFiles) {
-		Write-Output "Processing file: $($languageFile)"
+	  Write-Output "Processing file: $($languageFile.Name)"
+    Add-WindowsPackage -Online -PackagePath $languageFile.FullName
 	}
 
 }
