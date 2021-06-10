@@ -1,3 +1,7 @@
+param(
+     [string]$languageDownloadUrl
+)
+
 <#
 .SYNOPSIS
   <Script for provisioning AVD session hosts>
@@ -71,7 +75,33 @@ function Remove-BuiltInApps {
     }    
 }
 
+function Install-LanguageFeatures {
+	param (
+		$downloadUrl
+	)
+
+	Write-Output "Downloading language specific files using the URL: $($downloadUrl)"
+	Write-Output "Extracting .zip file"
+
+	# Split URL to get file name
+	$fileName = $downloadUrl.Split('/')[4]
+	$filePath = ".\" + $fileName
+
+	# Extract .zip archive
+	Expand-Archive -Path $filePath
+
+	$languageFiles = Get-ChildItem -Path $filePath
+
+	foreach ($languageFile in $languageFiles) {
+		Write-Output "Processing file: $($languageFile)"
+	}
+
+}
+
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
 # Execute Appcleanup
 Remove-BuiltInApps
+
+# Call function for installing language features
+Install-LanguageFeatures -downloadUrl $languageDownloadUrl
