@@ -106,3 +106,9 @@ Remove-BuiltInApps
 
 # Call function for installing language features
 Install-LanguageFeatures -downloadUrl $languageDownloadUrl
+
+# Manipulate the Windows language list
+$languageList = Get-WinUserLanguageList
+$languageList.Clear()
+$languageList.Add("de-CH")
+Set-WinUserLanguageList $languageList -Force
