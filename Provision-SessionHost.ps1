@@ -23,6 +23,7 @@ param(
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
 # Create local working directory
+Start-Transcript -Path C:\Windows\Temp\SessionHost-Provisioning.log
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
@@ -112,3 +113,6 @@ $languageList = Get-WinUserLanguageList
 $languageList.Clear()
 $languageList.Add("de-CH")
 Set-WinUserLanguageList $languageList -Force
+
+# Stop logging
+Stop-Transcript
