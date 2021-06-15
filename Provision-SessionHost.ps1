@@ -92,11 +92,12 @@ function Install-LanguageFeatures {
 	# Extract .zip archive
 	Write-Output "Extracting .zip file"
 	Expand-Archive -Path $filePath
-
-	Write-Output "Searching for cabinet files under the following path $($filePath.Split('.z')[1])"
-	$languageCabinetFiles = Get-ChildItem -Path $filePath.Split('.z')[1] | Where-Object Name -Like "*.cab"
-  	$languageAppFile = (Get-ChildItem -Path $filePath.Split('.z')[1] | Where-Object Name -Like "*.appx")[0]
-  	$languageAppLicenseFile = (Get-ChildItem -Path $filePath.Split('.z')[1] | Where-Object Name -Like "*.xml")[0]
+	
+	$searchPath = "." + $filePath.Split('.z')[1]
+	Write-Output "Searching for cabinet files under the following path $($searchPath)"
+	$languageCabinetFiles = Get-ChildItem -Path $searchPath | Where-Object Name -Like "*.cab"
+  	$languageAppFile = (Get-ChildItem -Path $searchPath | Where-Object Name -Like "*.appx")[0]
+  	$languageAppLicenseFile = (Get-ChildItem -Path $searchPath | Where-Object Name -Like "*.xml")[0]
 
   # Importing cabinet files .cab
 	foreach ($languageFile in $languageCabinetFiles) {
