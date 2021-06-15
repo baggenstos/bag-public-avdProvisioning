@@ -93,14 +93,15 @@ function Install-LanguageFeatures {
 	Write-Output "Extracting .zip file"
 	Expand-Archive -Path $filePath
 
+	Write-Output "Searching for cabinet files under the following path $($filePath.Split('.z')[0])"
 	$languageCabinetFiles = Get-ChildItem -Path $filePath.Split('.z')[0] | Where-Object Name -Like "*.cab"
-  $languageAppFile = (Get-ChildItem -Path $filePath.Split('.z')[0] | Where-Object Name -Like "*.appx")[0]
-  $languageAppLicenseFile = (Get-ChildItem -Path $filePath.Split('.z')[0] | Where-Object Name -Like "*.xml")[0]
+  	$languageAppFile = (Get-ChildItem -Path $filePath.Split('.z')[0] | Where-Object Name -Like "*.appx")[0]
+  	$languageAppLicenseFile = (Get-ChildItem -Path $filePath.Split('.z')[0] | Where-Object Name -Like "*.xml")[0]
 
   # Importing cabinet files .cab
 	foreach ($languageFile in $languageCabinetFiles) {
-	  Write-Output "Processing file: $($languageFile.Name)"
-    Add-WindowsPackage -Online -PackagePath $languageFile.FullName
+	  	Write-Output "Processing file: $($languageFile.Name)"
+    		Add-WindowsPackage -Online -PackagePath $languageFile.FullName
 	}
 
   # Importing language experience pack
