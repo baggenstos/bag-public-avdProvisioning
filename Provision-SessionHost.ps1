@@ -93,7 +93,7 @@ function Install-LanguageFeatures {
 	Write-Output "Extracting .zip file"
 	Expand-Archive -Path $filePath
 	
-	$searchPath = "." + $filePath.Split('.z')[1]
+	$searchPath = $PSScriptRoot + $filePath.Split('.z')[1]
 	Write-Output "Searching for cabinet files under the following path $($searchPath)"
 	$languageCabinetFiles = Get-ChildItem -Path $searchPath | Where-Object Name -Like "*.cab"
   	$languageAppFile = (Get-ChildItem -Path $searchPath | Where-Object Name -Like "*.appx")[0]
