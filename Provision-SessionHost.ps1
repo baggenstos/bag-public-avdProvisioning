@@ -122,3 +122,4 @@ Set-WinUserLanguageList $languageList -Force
 
 # Stop logging
 Stop-Transcript
+exit 0
