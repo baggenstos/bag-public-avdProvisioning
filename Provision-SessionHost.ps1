@@ -108,9 +108,6 @@ function Install-LanguageFeatures {
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
 
-# Execute Appcleanup
-Remove-BuiltInApps
-
 # Call function for installing language features
 Install-LanguageFeatures -downloadUrl $languageDownloadUrl
 
@@ -119,6 +116,9 @@ $languageList = Get-WinUserLanguageList
 $languageList.Clear()
 $languageList.Add("de-CH")
 Set-WinUserLanguageList $languageList -Force
+
+# Execute Appcleanup
+Remove-BuiltInApps
 
 # Stop logging
 Stop-Transcript
