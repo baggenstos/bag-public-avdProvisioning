@@ -85,7 +85,9 @@ function Install-LanguageFeatures {
 
 	# Split URL to get file name
 	$fileName = $downloadUrl.Split('/')[4]
+	Write-Output "Got .zip archive $($fileName) from archive"
 	$filePath = ".\" + $fileName
+	Write-Output "Build full file path $($filePath)"
 
 	# Extract .zip archive
 	Write-Output "Extracting .zip file"
